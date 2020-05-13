@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище UnreaShopDbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Sex" Type="nvarchar(max)" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Orders" Type="int" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameItem" Type="nvarchar(max)" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="Info" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" />
+        </EntityType>
+        <EntityType Name="OrderList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClients" Type="int" Nullable="false" />
+          <Property Name="Items" Type="nvarchar(max)" />
+          <Property Name="Staff" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Premium" Type="float" Nullable="false" />
+          <Property Name="Accept" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="OrderSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClients" Type="int" />
+          <Property Name="IdItems" Type="int" />
+          <Property Name="IdUsers" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Discount" Type="float" Nullable="false" />
+          <Property Name="Price" Type="float" />
+        </EntityType>
+        <EntityType Name="Return">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdOrder" Type="int" />
+          <Property Name="NumberReturn" Type="int" Nullable="false" />
+          <Property Name="StaffName" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameUser" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TypeAccount" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_OrderList_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderList">
+              <PropertyRef Name="IdClients" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderSet_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="IdClients" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderSet_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="0..1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="IdItems" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderSet_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="IdUsers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Return_OrderSet">
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="0..1" />
+          <End Role="Return" Type="Self.Return" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Return">
+              <PropertyRef Name="IdOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище UnreaShopDbModelContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderList" EntityType="Self.OrderList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderSet" EntityType="Self.OrderSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Return" EntityType="Self.Return" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_OrderList_Clients" Association="Self.FK_OrderList_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="OrderList" EntitySet="OrderList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderSet_Clients" Association="Self.FK_OrderSet_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderSet_Items" Association="Self.FK_OrderSet_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderSet_Users" Association="Self.FK_OrderSet_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Return_OrderSet" Association="Self.FK_Return_OrderSet">
+            <End Role="OrderSet" EntitySet="OrderSet" />
+            <End Role="Return" EntitySet="Return" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UnreaShopDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Orders" Type="Int32" />
+          <NavigationProperty Name="OrderList" Relationship="Self.FK_OrderList_Clients" FromRole="Clients" ToRole="OrderList" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_OrderSet_Clients" FromRole="Clients" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameItem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_OrderSet_Items" FromRole="Items" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="OrderList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClients" Type="Int32" Nullable="false" />
+          <Property Name="Items" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Staff" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Premium" Type="Double" Nullable="false" />
+          <Property Name="Accept" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_OrderList_Clients" FromRole="OrderList" ToRole="Clients" />
+        </EntityType>
+        <EntityType Name="OrderSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClients" Type="Int32" />
+          <Property Name="IdItems" Type="Int32" />
+          <Property Name="IdUsers" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Discount" Type="Double" Nullable="false" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_OrderSet_Clients" FromRole="OrderSet" ToRole="Clients" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_OrderSet_Items" FromRole="OrderSet" ToRole="Items" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_OrderSet_Users" FromRole="OrderSet" ToRole="Users" />
+          <NavigationProperty Name="Return" Relationship="Self.FK_Return_OrderSet" FromRole="OrderSet" ToRole="Return" />
+        </EntityType>
+        <EntityType Name="Return">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdOrder" Type="Int32" />
+          <Property Name="NumberReturn" Type="Int32" Nullable="false" />
+          <Property Name="StaffName" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_Return_OrderSet" FromRole="Return" ToRole="OrderSet" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameUser" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="OrderSet" Relationship="Self.FK_OrderSet_Users" FromRole="Users" ToRole="OrderSet" />
+        </EntityType>
+        <Association Name="FK_OrderList_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="OrderList" Type="Self.OrderList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderList">
+              <PropertyRef Name="IdClients" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderSet_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="IdClients" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderSet_Items">
+          <End Role="Items" Type="Self.Items" Multiplicity="0..1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="IdItems" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderSet_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderSet">
+              <PropertyRef Name="IdUsers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Return_OrderSet">
+          <End Role="OrderSet" Type="Self.OrderSet" Multiplicity="0..1" />
+          <End Role="Return" Type="Self.Return" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Return">
+              <PropertyRef Name="IdOrder" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UnreaShopDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Items" EntityType="Self.Items" />
+          <EntitySet Name="OrderList" EntityType="Self.OrderList" />
+          <EntitySet Name="OrderSet" EntityType="Self.OrderSet" />
+          <EntitySet Name="Return" EntityType="Self.Return" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_OrderList_Clients" Association="Self.FK_OrderList_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="OrderList" EntitySet="OrderList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderSet_Clients" Association="Self.FK_OrderSet_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderSet_Items" Association="Self.FK_OrderSet_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderSet_Users" Association="Self.FK_OrderSet_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OrderSet" EntitySet="OrderSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Return_OrderSet" Association="Self.FK_Return_OrderSet">
+            <End Role="OrderSet" EntitySet="OrderSet" />
+            <End Role="Return" EntitySet="Return" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище UnreaShopDbModelContainer" CdmEntityContainer="UnreaShopDbEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="UnreaShopDbModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Orders" ColumnName="Orders" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="UnreaShopDbModel.Items">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameItem" ColumnName="NameItem" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderList">
+            <EntityTypeMapping TypeName="UnreaShopDbModel.OrderList">
+              <MappingFragment StoreEntitySet="OrderList">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdClients" ColumnName="IdClients" />
+                <ScalarProperty Name="Items" ColumnName="Items" />
+                <ScalarProperty Name="Staff" ColumnName="Staff" />
+                <ScalarProperty Name="Premium" ColumnName="Premium" />
+                <ScalarProperty Name="Accept" ColumnName="Accept" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderSet">
+            <EntityTypeMapping TypeName="UnreaShopDbModel.OrderSet">
+              <MappingFragment StoreEntitySet="OrderSet">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdClients" ColumnName="IdClients" />
+                <ScalarProperty Name="IdItems" ColumnName="IdItems" />
+                <ScalarProperty Name="IdUsers" ColumnName="IdUsers" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Return">
+            <EntityTypeMapping TypeName="UnreaShopDbModel.Return">
+              <MappingFragment StoreEntitySet="Return">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="NumberReturn" ColumnName="NumberReturn" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="UnreaShopDbModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="NameUser" ColumnName="NameUser" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="TypeAccount" ColumnName="TypeAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

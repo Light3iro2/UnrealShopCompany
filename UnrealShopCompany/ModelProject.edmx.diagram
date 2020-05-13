@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="09285caa97964094b4419180901d413c" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="UnreaShopDbModel.Clients" Width="1.5" PointX="0.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnreaShopDbModel.Items" Width="1.5" PointX="2.375" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnreaShopDbModel.OrderList" Width="1.5" PointX="12.875" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnreaShopDbModel.OrderSet" Width="1.5" PointX="6.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnreaShopDbModel.Return" Width="1.5" PointX="10" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UnreaShopDbModel.Users" Width="1.5" PointX="0.5" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="UnreaShopDbModel.FK_OrderList_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="UnreaShopDbModel.FK_OrderSet_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="UnreaShopDbModel.FK_OrderSet_Items" ManuallyRouted="false" />
+        <AssociationConnector Association="UnreaShopDbModel.FK_OrderSet_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="UnreaShopDbModel.FK_Return_OrderSet" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
